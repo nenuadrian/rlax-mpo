@@ -24,7 +24,20 @@ import jax
 import jax.numpy as jnp
 import optax
 import rlax
-from rlax.examples import experiment
+# Allow running as `python -m examples.online_q_learning` or `python examples/online_q_learning.py`.
+try:  # pragma: no cover - import shim
+  from examples import experiment
+except ImportError:  # pragma: no cover
+  import importlib
+  import pathlib
+  import sys
+  sys.path.append(str(pathlib.Path(__file__).resolve().parent))
+  experiment = importlib.import_module("experiment")
+
+# bsuite<=0.3 uses deprecated np.int; restore alias for NumPy>=1.20.
+import numpy as np
+if not hasattr(np, "int"):  # pragma: no cover
+  np.int = int
 
 ActorOutput = collections.namedtuple("ActorOutput", "actions q_values")
 Transition = collections.namedtuple("Transition",

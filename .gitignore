@@ -1,4 +1,6 @@
 # Building and releasing library:
+.pylintrc
+.venv/**
 *.egg-info
 *.pyc
 *.so

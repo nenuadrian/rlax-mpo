@@ -26,9 +26,22 @@ import haiku as hk
 from haiku import nets
 import jax
 import jax.numpy as jnp
+import numpy as np
 import optax
 import rlax
-from rlax.examples import experiment
+# Allow running as `python -m examples.pop_art` or `python examples/pop_art.py`.
+try:  # pragma: no cover - import shim
+  from examples import experiment
+except ImportError:  # pragma: no cover
+  import importlib
+  import pathlib
+  import sys
+  sys.path.append(str(pathlib.Path(__file__).resolve().parent))
+  experiment = importlib.import_module("experiment")
+
+# bsuite<=0.3 uses deprecated np.int; restore alias for NumPy>=1.20.
+if not hasattr(np, "int"):  # pragma: no cover
+  np.int = int
 
 ActorOutput = collections.namedtuple("ActorOutput", "actions")
 Transition = collections.namedtuple("Transition",
