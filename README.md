@@ -14,7 +14,13 @@ documentation can be found at
 You can install the latest released version of RLax from PyPI via:
 
 ```sh
-pip install rlax
+python3.11 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pip install .
+
+# for tpu
+pip install jaxlib libtpu
 ```
 
 or you can install the latest development version from GitHub:
